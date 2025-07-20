@@ -81,6 +81,12 @@
 				},
 				"publisherDisplayName": "Microsoft"
 			}
+		},
+		{
+			"name": "kilocode.kilo-code",
+			"version": "4.59.2",
+			"sha256": "d10c127fdfe02f88e068117c0ff2467dd4a81e501aad10bc02e6eee59c705c41",
+			"vsix": "../kilo/bin/kilo-code-4.59.2.vsix"
 		}
 	]
 }
