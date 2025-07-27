@@ -1,0 +1,38 @@
+{
+    "name": "remote-server",
+    "displayName": "remote-server",
+    "description": "A remote server for the mobile client.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.83.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": []
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.21",
+        "@types/node": "18.x",
+        "@types/vscode": "^1.83.0",
+        "@types/ws": "^8.5.10",
+        "@typescript-eslint/eslint-plugin": "^6.7.3",
+        "@typescript-eslint/parser": "^6.7.3",
+        "eslint": "^8.50.0",
+        "typescript": "^5.2.2"
+    },
+    "dependencies": {
+        "express": "^4.19.2",
+        "ws": "^8.17.0"
+    }
+}
