@@ -16,16 +16,29 @@ interface FileNode {
 }
 
 class QrViewProvider implements vscode.WebviewViewProvider {
+  private _latestHtml?: string;
   private _view?: vscode.WebviewView;
-  public setQr(dataUrl: string, url: string) {
-    if (this._view) {
-      this._view.webview.html = getQrHtml(dataUrl, url);
+    public setQr(dataUrl: string, url: string) {
+    this._latestHtml = getQrHtml(dataUrl, url);
+        if (this._view) {
+      this._view.webview.html = this._latestHtml!;
     }
   }
-  resolveWebviewView(view: vscode.WebviewView) {
+      resolveWebviewView(view: vscode.WebviewView) {
     this._view = view;
-    view.webview.options = { enableScripts: false };
-    view.webview.html = '<p>QR will appear once server starts...</p>';
+        view.webview.options = { enableScripts: false };
+    if (this._latestHtml) {
+      view.webview.html = this._latestHtml;
+    } else {
+      view.webview.html = '<p>QR will appear once server starts...</p>';
+    }
+
+    // Ensure QR appears when user later shows the view
+    view.onDidChangeVisibility(() => {
+      if (view.visible && this._latestHtml) {
+        view.webview.html = this._latestHtml;
+      }
+    });
   }
 }
 
@@ -85,6 +98,35 @@ export function activate(context: vscode.ExtensionContext) {
     if (!fs.existsSync(abs) || !fs.statSync(abs).isFile()) return res.status(404).send('Not found');
     const content = fs.readFileSync(abs, 'utf8');
     res.json({ content });
+  });
+
+  // ------------------ Generic VS Code command handler ------------------
+  // POST variant: { command: string, args?: any[] }
+  app.post('/api/command', async (req, res) => {
+    const { command, args = [] } = req.body || {};
+    if (!command || typeof command !== 'string') {
+      return res.status(400).json({ error: 'command string required' });
+    }
+    try {
+      const result = await vscode.commands.executeCommand(command, ...args);
+      return res.json({ result });
+    } catch (err: any) {
+      return res.status(500).json({ error: err.message ?? String(err) });
+    }
+  });
+
+  // GET variant: /api/command?command=...&args=[jsonEncodedArray]
+  app.get('/api/command', async (req, res) => {
+    const command = req.query.command as string | undefined;
+    const argsRaw = req.query.args as string | undefined;
+    const args = argsRaw ? JSON.parse(argsRaw) : [];
+    if (!command) return res.status(400).send('command required');
+    try {
+      const result = await vscode.commands.executeCommand(command, ...(args as any[]));
+      return res.json({ result });
+    } catch (err: any) {
+      return res.status(500).json({ error: err.message ?? String(err) });
+    }
   });
 
   const server = http.createServer(app);
