@@ -85,8 +85,14 @@
 		{
 			"name": "kilocode.kilo-code",
 			"version": "4.59.2",
-			"sha256": "d10c127fdfe02f88e068117c0ff2467dd4a81e501aad10bc02e6eee59c705c41",
-			"vsix": "../kilo/bin/kilo-code-4.59.2.vsix"
+			"sha256": "8989f3403f485ed57ae97c02bd045d1de632c3a3ada084938f02e2c574a9829d",
+			"vsix": "../code-chief/kilo/bin/kilo-code-4.59.2.vsix"
+		},
+		{
+			"name": "codechief.code-chief-remote",
+			"version": "0.0.1",
+			"sha256": "38664fbf1bcec3be98cc454bcb1d39b9d6fa316fe88281002b95417216eb5a1c",
+			"vsix": "../code-chief-remote/code-chief-remote-0.0.1.vsix"
 		}
 	]
 }
