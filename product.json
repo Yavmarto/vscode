@@ -84,9 +84,9 @@
 		},
 		{
 			"name": "kilocode.kilo-code",
-			"version": "4.59.2",
+			"version": "4.77.0",
 			"sha256": "8989f3403f485ed57ae97c02bd045d1de632c3a3ada084938f02e2c574a9829d",
-			"vsix": "../code-chief/kilo/bin/kilo-code-4.59.2.vsix"
+			"vsix": "../code-chief/kilo/bin/kilo-code-4.77.0.vsix"
 		},
 		{
 			"name": "codechief.code-chief-remote",
