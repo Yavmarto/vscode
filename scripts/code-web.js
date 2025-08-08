@@ -76,6 +76,9 @@ async function main() {
 
 	serverArgs.push('--sourcesPath', APP_ROOT);
 
+	// Always include Kilo extension for web build
+	serverArgs.push('--extensionPath', path.join(APP_ROOT, '..', 'kilo'));
+
 	serverArgs.push(...process.argv.slice(2).filter(v => !v.startsWith('--playground') && v !== '--no-playground'));
 
 	startServer(serverArgs);
